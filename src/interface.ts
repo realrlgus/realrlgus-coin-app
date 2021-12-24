@@ -1,5 +1,3 @@
-import React from "react";
-
 export interface ICoinList {
   market: string;
   korean_name: string;
@@ -7,5 +5,6 @@ export interface ICoinList {
 }
 
 export interface IHeader {
-  toggleTheme: React.Dispatch<React.SetStateAction<string>>;
+  toggleTheme: () => void;
+  theme: boolean;
 }
