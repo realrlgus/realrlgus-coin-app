@@ -25,6 +25,11 @@ const ItemWrapper = styled.div`
   display: flex;
   align-items: stretch;
   gap: 10px;
+  background-color: ${(props) => props.theme.item};
+  border: 2px solid ${(props) => props.theme.itemBorder};
+  padding: 20px;
+  border-radius: 30px;
+  box-shadow: 2px 2px 2px 2px ${(props) => props.theme.itemShadow};
 `;
 
 const ItemImage = styled.img`
@@ -34,7 +39,7 @@ const ItemImage = styled.img`
 
 const ItemTitle = styled.span`
   font-size: 1.3rem;
-  color: ${(props) => props.theme.text};
+  color: ${(props) => props.theme.itemText};
   margin: auto 0;
 `;
 
