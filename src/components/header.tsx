@@ -3,8 +3,8 @@ import { IHeader } from "../interface";
 
 const HeaderContainer = styled.div`
   padding: 25px 0px;
-
   background-color: ${(props) => props.theme.background};
+  border-bottom: 1px solid ${(props) => props.theme.headerBorder};
 `;
 
 const HeaderWrapper = styled.div`

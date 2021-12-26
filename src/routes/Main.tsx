@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { getCoinList } from "../api";
 import { ICoinList } from "../interface";
 import { Loader } from "../components/Loader";
+import { Link } from "react-router-dom";
 
 const MainContainer = styled.div`
   background-color: ${(props) => props.theme.background};
@@ -20,12 +21,12 @@ const ItemContainer = styled.div`
   justify-content: space-around;
 `;
 
-const ItemWrapper = styled.div`
+const ItemLink = styled(Link)`
   width: 100%;
   display: flex;
   align-items: stretch;
   gap: 10px;
-  background-color: ${(props) => props.theme.item};
+  background-color: ${(props) => props.theme.background};
   border: 2px solid ${(props) => props.theme.itemBorder};
   padding: 20px;
   border-radius: 30px;
@@ -54,14 +55,14 @@ const Main = () => {
     <MainContainer>
       <ItemContainer>
         {data?.map((coin) => (
-          <ItemWrapper>
+          <ItemLink to={`/${coin.market.split("-")[1]}`}>
             <ItemImage
               src={`https://static.upbit.com/logos/${
                 coin.market.split("-")[1]
               }.png `}
             />
             <ItemTitle>{coin.korean_name}</ItemTitle>
-          </ItemWrapper>
+          </ItemLink>
         ))}
       </ItemContainer>
     </MainContainer>
