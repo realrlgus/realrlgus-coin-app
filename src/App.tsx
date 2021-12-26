@@ -25,6 +25,7 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme ? darkTheme : lightTheme}>
+      <ReactQueryDevtools initialIsOpen={true} />
       <Header toggleTheme={toggleTheme} theme={theme} />
       <Router />
       <GlobalStyles />

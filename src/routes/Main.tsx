@@ -16,7 +16,7 @@ const ItemContainer = styled.div`
   padding: 25px;
   display: grid;
   align-items: center;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: 25px;
   justify-content: space-around;
 `;
@@ -26,7 +26,7 @@ const ItemLink = styled(Link)`
   display: flex;
   align-items: stretch;
   gap: 10px;
-  background-color: ${(props) => props.theme.background};
+  background-color: ${(props) => props.theme.item};
   border: 2px solid ${(props) => props.theme.itemBorder};
   padding: 20px;
   border-radius: 30px;
@@ -55,7 +55,11 @@ const Main = () => {
     <MainContainer>
       <ItemContainer>
         {data?.map((coin) => (
-          <ItemLink to={`/${coin.market.split("-")[1]}`}>
+          <ItemLink
+            to={`/${coin.market.split("-")[1]}`}
+            state={{ koreanName: coin.korean_name }}
+            key={coin.market}
+          >
             <ItemImage
               src={`https://static.upbit.com/logos/${
                 coin.market.split("-")[1]
