@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { getCoinInfo } from "../api";
+import { getCoinCandle, getCoinInfo } from "../api";
+import { Chart } from "../components/Chart";
 import { Coin } from "../components/Coin";
 import { Loader } from "../components/Loader";
 import { ICoinInfo, IParams, ILocation } from "../interface";
@@ -29,6 +30,11 @@ export const Info = () => {
     () => getCoinInfo(coin)
   );
 
+  const { isLoading: isChartLoading, data: chartData } = useQuery(
+    [coin, "getCoinCandle"],
+    () => getCoinCandle(coin)
+  );
+
   return (
     <InfoContainer>
       <InfoWrapper>
@@ -41,6 +47,7 @@ export const Info = () => {
             koreanName={koreanName}
           />
         )}
+        <Chart />
       </InfoWrapper>
     </InfoContainer>
   );

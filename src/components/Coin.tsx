@@ -93,7 +93,7 @@ export const Coin = ({ coinData, coin, koreanName }: ICoinParams) => (
     </CoinHeader>
     <CoinInfo>
       {coinData?.map((coin) => (
-        <CoinExchange>
+        <CoinExchange key={coin.market}>
           <ExchangeHeader>
             <ExchangeLogo
               src={require(`/src/assets/logo/${coin.market}.png`)}
