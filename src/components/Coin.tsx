@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { ICoinParams } from "../interface";
+import { addComma } from "../util";
 
 const CoinCointainer = styled.div``;
 
@@ -106,7 +107,9 @@ export const Coin = ({ coinData, coin, koreanName }: ICoinParams) => (
           <ExchangeSection>
             <ExchangeItem>
               <ExchangeItemTitle>현재가</ExchangeItemTitle>
-              <ExchangeItemValue>{coin.currentPrice}</ExchangeItemValue>
+              <ExchangeItemValue>
+                {addComma(coin.currentPrice)}원
+              </ExchangeItemValue>
             </ExchangeItem>
           </ExchangeSection>
           <ExchangeSection>
@@ -118,13 +121,15 @@ export const Coin = ({ coinData, coin, koreanName }: ICoinParams) => (
           <ExchangeSection>
             <ExchangeItem>
               <ExchangeItemTitle>금일 최고가</ExchangeItemTitle>
-              <ExchangeItemValue>{coin.highPrice}</ExchangeItemValue>
+              <ExchangeItemValue>
+                {addComma(coin.highPrice)}원
+              </ExchangeItemValue>
             </ExchangeItem>
           </ExchangeSection>
           <ExchangeSection>
             <ExchangeItem>
               <ExchangeItemTitle>금일 최저가</ExchangeItemTitle>
-              <ExchangeItemValue>{coin.lowPrice}</ExchangeItemValue>
+              <ExchangeItemValue>{addComma(coin.lowPrice)}원</ExchangeItemValue>
             </ExchangeItem>
           </ExchangeSection>
         </CoinExchange>

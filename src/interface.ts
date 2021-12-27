@@ -32,3 +32,37 @@ export interface ICoinParams extends IParams {
   koreanName: string;
   coinData: ICoinInfo[];
 }
+
+export interface ICoinChartParams extends IParams {
+  chartData: [string, number, number, number, number][];
+  chartUpbitData: IUpbitCandle[];
+  chartBinanceData: [
+    number,
+    string,
+    string,
+    string,
+    number,
+    string,
+    number,
+    string,
+    number,
+    string,
+    string,
+    string
+  ][];
+  USDT: number;
+}
+
+export interface IUpbitCandle {
+  market: string;
+  candle_date_time_utc: string;
+  candle_date_time_kst: string;
+  opening_price: number;
+  high_price: number;
+  low_price: number;
+  trade_price: number;
+  timestamp: number;
+  candle_acc_trade_price: number;
+  candle_acc_trade_volume: number;
+  unit: number;
+}

@@ -1,6 +1,14 @@
-import { ICoinInfo, ICoinList } from "./interface";
+import { ICoinInfo, ICoinList, IUpbitCandle } from "./interface";
 import axios from "axios";
 import { addComma } from "./util";
+
+export const getExchange = async () => {
+  const {
+    data: { USDKRW },
+  } = await axios.get(`https://exchange.jaeheon.kr:23490/query/USDKRW`);
+
+  return USDKRW[0];
+};
 
 export const getCoinList = () => {
   return fetch("https://api.upbit.com/v1/market/all")
@@ -31,6 +39,8 @@ export const getCoinInfo = async (coin: string) => {
     `https://api.binance.com/api/v3/ticker/24hr?symbol=${coin}USDT`
   );
 
+  const USDT = (await getExchange()) as unknown as number;
+
   const data = [];
 
   if (upbitData) {
@@ -39,7 +49,7 @@ export const getCoinInfo = async (coin: string) => {
       currentPrice: trade_price,
       highPrice: high_price,
       lowPrice: low_price,
-      changeRate: change_rate * 100,
+      changeRate: change_rate.toFixed(3) * 100,
     });
   }
   if (bithumbData) {
@@ -54,9 +64,9 @@ export const getCoinInfo = async (coin: string) => {
   if (prevClosePrice) {
     data.push({
       market: "Binance",
-      currentPrice: prevClosePrice,
-      highPrice: highPrice,
-      lowPrice: lowPrice,
+      currentPrice: Math.floor(prevClosePrice * USDT),
+      highPrice: Math.floor(highPrice * USDT),
+      lowPrice: Math.floor(lowPrice * USDT),
       changeRate: priceChangePercent,
     });
   }
@@ -64,20 +74,28 @@ export const getCoinInfo = async (coin: string) => {
   return data;
 };
 
-export const getCoinCandle = async (coin: string) => {
-  const upbit = await axios.get(
-    `https://api.upbit.com/v1/candles/minutes/5?market=KRW-${coin}&count=500`
-  );
-
+export const getBithumbCoinCandle = async (coin: string) => {
   const {
     data: { data: bithumb },
   }: { data: { data: [] } } = await axios.get(
     `https://api.bithumb.com/public/candlestick/${coin}_KRW/5m`
   );
 
-  const binance = await axios.get(
-    `https://api.binance.com/api/v3/klines?symbol=${coin}USDT&interval=5m&limit=500`
+  return bithumb.splice(0, 200);
+};
+
+export const getUpbitCoinCandle = async (coin: string) => {
+  const { data: upbit } = await axios.get<IUpbitCandle[]>(
+    `https://api.upbit.com/v1/candles/minutes/5?market=KRW-${coin}&count=200`
   );
 
-  return bithumb;
+  return upbit;
+};
+
+export const getBinanceCoinCandle = async (coin: string) => {
+  const { data: binance } = await axios.get(
+    `https://api.binance.com/api/v3/klines?symbol=${coin}USDT&interval=5m&limit=200`
+  );
+
+  return binance;
 };
