@@ -34,7 +34,7 @@ export const getCoinInfo = async (coin: string) => {
   } = bithumbData;
 
   const {
-    data: { prevClosePrice, highPrice, lowPrice, priceChangePercent },
+    data: { lastPrice, highPrice, lowPrice, priceChangePercent },
   } = await axios.get(
     `https://api.binance.com/api/v3/ticker/24hr?symbol=${coin}USDT`
   );
@@ -61,10 +61,10 @@ export const getCoinInfo = async (coin: string) => {
       changeRate: fluctate_rate_24H,
     });
   }
-  if (prevClosePrice) {
+  if (lastPrice) {
     data.push({
       market: "Binance",
-      currentPrice: Math.floor(prevClosePrice * USDT),
+      currentPrice: Math.floor(lastPrice * USDT),
       highPrice: Math.floor(highPrice * USDT),
       lowPrice: Math.floor(lowPrice * USDT),
       changeRate: priceChangePercent,
@@ -81,7 +81,7 @@ export const getBithumbCoinCandle = async (coin: string) => {
     `https://api.bithumb.com/public/candlestick/${coin}_KRW/5m`
   );
 
-  return bithumb.splice(0, 200);
+  return bithumb.splice(-200);
 };
 
 export const getUpbitCoinCandle = async (coin: string) => {
